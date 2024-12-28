@@ -4,11 +4,15 @@
     "description": "TODO",
     "main": "background.js",
     "scripts": {
-        "build": "tsc && cp -r public/* dist/"
+        "build-dev": "webpack --mode=development && cp -r public/* dist/",
+        "build": "webpack && cp -r public/* dist/"
     },
     "author": "Pihedy",
     "license": "Apache-2.0",
     "dependencies": {
-        "typescript": "^5.7.2"
+        "ts-loader": "^9.5.1",
+        "typescript": "^5.7.2",
+        "webpack": "^5.97.1",
+        "webpack-cli": "^6.0.1"
     }
 }
