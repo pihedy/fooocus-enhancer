@@ -1,0 +1,14 @@
+{
+    "name": "fooocus-enhancer",
+    "version": "1.0.0",
+    "description": "TODO",
+    "main": "background.js",
+    "scripts": {
+        "build": "tsc && cp -r public/* dist/"
+    },
+    "author": "Pihedy",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "typescript": "^5.7.2"
+    }
+}
