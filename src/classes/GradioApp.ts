@@ -4,7 +4,6 @@
  * @author Pihedy
  */
 export class GradioApp { 
-
     /**
      * The singleton instance of the GradioApp class.
      */
@@ -27,7 +26,7 @@ export class GradioApp {
      * 
      * @returns {GradioApp} The singleton instance of the `GradioApp` class.
      */
-    public static getInstance() {
+    public static getInstance(): GradioApp {
         if (!GradioApp.instance) {
             GradioApp.instance = new GradioApp();
         }
@@ -51,6 +50,13 @@ export class GradioApp {
         this.Gradio = Element;
     }
 
+    /**
+     * Retrieves the first element with the specified tag name from the Gradio element managed by the GradioApp singleton.
+     *
+     * @param tag - The tag name of the element to retrieve.
+     * 
+     * @returns The first element with the specified tag name, or `null` if no such element is found.
+     */
     public getTag(tag: string): Element|null {
         let result = this.Gradio?.getElementsByTagName(tag);
 
