@@ -6,10 +6,8 @@ import { gradioApp } from "../components/gradioApp";
 
 /**
  * It adds a tiny flag about the app.
- * 
- * @param {Event} Event - The event object passed to the event listener.
  */
-document.addEventListener('fooocus-enhancer-ready', (Event: Event) => {
+document.addEventListener('fooocus-enhancer-ready', () => {
     let Separator = document.createElement('div');
     let Author = document.createElement('a');
 
