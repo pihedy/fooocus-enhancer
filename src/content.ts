@@ -4,6 +4,7 @@
 
 import { gradioApp } from "./components/gradioApp";
 
+require('./events/initDataManager');
 require('./events/addFooterFlag');
 
 const initInterval = setInterval(() => {
