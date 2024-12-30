@@ -1,3 +1,5 @@
+import { gradioApp } from "../../components/gradioApp";
+import { storageDataManager } from "../../components/storageDataManager";
 import { InputElement } from "./InputElement";
 
 /**
@@ -23,6 +25,10 @@ export class WordContainer {
 
     /**
      * Creates a new word container element and appends it to the parent element of the associated input element.
+     * 
+     * TODO: 
+     * Ezt kiszerveztni valamibe, mert eléggé kaka így!
+     * Ez itt már nagyon elburjánzott! Refactor-t kíván nagyon!
      */
     public createWordContainer(): void {
         this.removeWordContainer();
@@ -43,11 +49,75 @@ export class WordContainer {
 
         Parent?.append(this.WordContainer);
 
-        let textarea = document.createElement('textarea');
+        let words = storageDataManager().get(`lora_words.${this.InputElement.getValue(true)}`, []);
 
-        textarea.textContent = 'test';
+        let display = document.createElement('textarea');
+        let actionsRow = document.createElement('div');
+        let editAndSaveButton = document.createElement('div');
+        let insertButton = document.createElement('div');
 
-        this.WordContainer.append(textarea);
+        display.className = 'fe-display';
+        display.textContent = words.join(', ');
+
+        actionsRow.className = 'fe-actions';
+
+        editAndSaveButton.className = 'fe-button';
+        editAndSaveButton.textContent = 'Edit';
+
+        insertButton.className = 'fe-button';
+        insertButton.textContent = 'Insert';
+
+        this.WordContainer.append(display);
+        this.WordContainer.append(actionsRow);
+
+        actionsRow.append(editAndSaveButton);
+        actionsRow.append(insertButton);
+
+        editAndSaveButton.addEventListener('click', (Event: Event) => {
+            let Target = Event.target as HTMLElement;
+
+            if (display.classList.contains('editable-on')) {
+                display.classList.remove('editable-on');
+
+                storageDataManager().set(
+                    `lora_words.${this.InputElement.getValue(true)}`, 
+                    display.value.replace(/, /g, ',').split(',')
+                );
+
+                Target.textContent = 'Edit';
+
+                return;
+            }
+
+            display.classList.add('editable-on');
+            display.focus();
+
+            Target.textContent = 'Save';
+        });
+
+        insertButton.addEventListener('click', () => {
+            let PromptArea = gradioApp().find('div#positive_prompt textarea');
+
+            if (!PromptArea || PromptArea.length <= 0) {
+                return;
+            }
+
+            PromptArea.forEach((Textarea) => {
+                let words = storageDataManager().get(`lora_words.${this.InputElement.getValue(true)}`, []);
+
+                if (!(Textarea instanceof HTMLTextAreaElement)) {
+                    return;
+                }
+
+                words = words.join(', ');
+
+                if (Textarea.value.length > 0) {
+                    words = `, ${words}`;
+                }
+
+                Textarea.value += words;
+            });
+        });
     }
 
     /**

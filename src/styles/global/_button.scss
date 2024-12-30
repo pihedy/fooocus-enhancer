@@ -1,0 +1,29 @@
+/* Global Buttons SCSS */
+
+.fe-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.fe-button {
+    width: fit-content;
+    margin: 0 0.125rem;
+    padding: 0.1rem 0.6rem;
+    background: white;
+    border-radius: 0.313rem;
+    border: 1px solid rgb(183 183 183) !important;
+    text-align: center;
+    line-height: normal;
+    user-select: none;
+    cursor: pointer;
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
