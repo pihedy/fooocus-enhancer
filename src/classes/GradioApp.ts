@@ -35,6 +35,38 @@ export class GradioApp {
     }
 
     /**
+     * Retrieves the first element with the specified tag name.
+     *
+     * @param tag - The tag name of the element to retrieve.
+     * 
+     * @returns The first element with the specified tag name, or `null` if no such element is found.
+     */
+    public getTag(tag: string): Element|null {
+        let result = this.getTags(tag);
+
+        if (result && result.length <= 0) {
+            return null;
+        }
+
+        return result ? result[0] : null;
+    }
+
+    /**
+     * Retrieves a collection of elements with the specified tag name.
+     *
+     * @param tag - The tag name of the elements to retrieve.
+     * 
+     * @returns The collection of elements with the specified tag name, or `undefined` if the Gradio element is not set.
+     */
+    public getTags(tag: string): HTMLCollectionOf<Element>|undefined {
+        return this.Gradio?.getElementsByTagName(tag);
+    }
+
+    public find(query: string): NodeListOf<Element>|undefined {
+        return this.Gradio?.querySelectorAll(query);
+    }
+
+    /**
      * Sets the Gradio element managed by the GradioApp singleton.
      * 
      * @param Element The Gradio element to be managed by the GradioApp singleton.
@@ -49,22 +81,4 @@ export class GradioApp {
 
         this.Gradio = Element;
     }
-
-    /**
-     * Retrieves the first element with the specified tag name from the Gradio element managed by the GradioApp singleton.
-     *
-     * @param tag - The tag name of the element to retrieve.
-     * 
-     * @returns The first element with the specified tag name, or `null` if no such element is found.
-     */
-    public getTag(tag: string): Element|null {
-        let result = this.Gradio?.getElementsByTagName(tag);
-
-        if (result && result.length <= 0) {
-            return null;
-        }
-
-        return result ? result[0] : null;
-    }
-
 }

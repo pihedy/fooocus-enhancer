@@ -2,11 +2,11 @@
  * @author: Pihedy
  */
 
-import { dataManager } from "../components/dataManager";
+import { storageDataManager } from "../components/storageDataManager";
 
 /** 
  * Just a simple test and initialization for DataManager.
  */
 document.addEventListener('fooocus-enhancer-ready', () => {
-    dataManager().set('current_date', new Date());
+    storageDataManager().set('date.current', new Date());
 });

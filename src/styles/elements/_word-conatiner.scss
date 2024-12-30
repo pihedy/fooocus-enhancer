@@ -1,0 +1,15 @@
+/* Word Container SCSS */
+
+.fe-lora-word-container {
+    height: calc(4.375rem + 1rem);
+    padding: 0.5rem;
+
+    textarea {
+        width: 100%;
+        height: 4.375rem !important;
+        border: none;
+        border-radius: 0.313rem !important;
+        resize: none !important;
+        pointer-events: none;
+    }
+}

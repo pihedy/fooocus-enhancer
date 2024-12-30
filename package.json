@@ -5,11 +5,16 @@
     "main": "background.js",
     "scripts": {
         "build-dev": "webpack --mode=development && cp -r public/* dist/",
+        "watch-dev": "webpack --mode=development --watch && cp -r public/* dist/",
         "build": "webpack && cp -r public/* dist/"
     },
     "author": "Pihedy",
     "license": "Apache-2.0",
     "dependencies": {
+        "css-loader": "^7.1.2",
+        "mini-css-extract-plugin": "^2.9.2",
+        "sass": "^1.83.0",
+        "sass-loader": "^16.0.4",
         "ts-loader": "^9.5.1",
         "typescript": "^5.7.2",
         "webpack": "^5.97.1",
