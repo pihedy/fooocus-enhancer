@@ -2,15 +2,13 @@
     "manifest_version": 3,
     "name": "Fooocus Enhancer",
     "version": "1.0.0",
-    "description": "TODO",
-    "permissions": ["activeTab", "storage", "tabs"],
+    "description": "A powerful Chrome extension that enhances the Fooocus web UI experience by adding useful features and improvements.",
+    "permissions": ["storage"],
     "host_permissions": ["http://127.0.0.1:7865/*"],
-    "background": {
-        "service_worker": "background.js"
-    },
     "content_scripts": [{
         "matches": ["http://127.0.0.1:7865/*"],
         "js": ["content.js"],
+        "css": ["css/main.css"],
         "run_at": "document_idle"
     }],
     "action": {
