@@ -1,7 +1,7 @@
 {
     "name": "fooocus-enhancer",
     "version": "1.0.0",
-    "description": "TODO",
+    "description": "A powerful Chrome extension that enhances the Fooocus web UI experience by adding useful features and improvements.",
     "main": "background.js",
     "scripts": {
         "build-dev": "webpack --mode=development && cp -r public/* dist/",
