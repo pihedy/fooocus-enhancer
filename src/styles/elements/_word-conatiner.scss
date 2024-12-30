@@ -1,0 +1,18 @@
+/* Word Container SCSS */
+
+.fe-lora-word-container {
+    padding: 0.5rem;
+
+    .fe-display {
+        width: 100%;
+        height: 4.375rem !important;
+        border: none;
+        border-radius: 0.313rem !important;
+        resize: none !important;
+        pointer-events: none;
+
+        &.editable-on {
+            pointer-events: fill;
+        }
+    }
+}
