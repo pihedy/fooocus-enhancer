@@ -2,7 +2,7 @@
  * @author: Pihedy
  */
 
-import { storageDataManager } from "../components/storageDataManager";
+import { storageDataManager } from "@components/storageDataManager";
 
 /** 
  * Just a simple test and initialization for DataManager.
