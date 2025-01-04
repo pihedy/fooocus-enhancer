@@ -117,6 +117,8 @@ export class WordContainer {
                 }
 
                 Textarea.value += words;
+
+                Textarea.dispatchEvent(new Event('input', {bubbles: true}));
             });
         });
     }
