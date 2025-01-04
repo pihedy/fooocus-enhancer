@@ -2,8 +2,8 @@
  * @author Pihedy
  */
 
-import { InputElement } from "../../classes/lora-models/InputElement";
-import { gradioApp } from "../../components/gradioApp";
+import { InputElement } from "@classes/lora-models/InputElement";
+import { gradioApp } from "@components/gradioApp";
 
 /**
  * Listens for the 'fooocus-enhancer-ready' event and performs some action when it is triggered.

@@ -2,7 +2,7 @@
  * @author: Pihedy
  */
 
-import { GradioApp } from "../classes/GradioApp";
+import { GradioApp } from "@/classes/GradioApp";
 
 /**
  * Returns the singleton instance of the GradioApp class.

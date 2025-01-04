@@ -2,13 +2,13 @@
  * @author: Pihedy
  */
 
-import { gradioApp } from "./components/gradioApp";
+import { gradioApp } from "@components/gradioApp";
 
-require('./events/initDataManager');
-require('./events/addFooterFlag');
+require('@events/initDataManager');
+require('@events/addFooterFlag');
 
-require('./events/lora-models/initLoraInputChange');
-require('./events/lora-models/changeWordContainer');
+require('@events/lora-models/initLoraInputChange');
+require('@events/lora-models/changeWordContainer');
 
 const initInterval = setInterval(() => {
     if (document.readyState !== 'complete') {

@@ -2,7 +2,7 @@
  * @author: Pihedy 
  */
 
-import { gradioApp } from "../components/gradioApp";
+import { gradioApp } from "@components/gradioApp";
 
 /**
  * It adds a tiny flag about the app.

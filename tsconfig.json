@@ -4,7 +4,17 @@
         "module": "es6",
         "outDir": "./dist",
         "strict": true,
-        "rootDir": "./src"
+        "rootDir": "./src",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            "@components/*": ["src/components/*"],
+            "@styles/*": ["src/styles/*"],
+            "@utils/*": ["src/utils/*"],
+            "@events/*": ["src/events/*"],
+            "@classes/*": ["src/classes/*"],
+            "@node_modules/*": ["node_modules/*"]
+        }
     },
     "include": ["src/**/*.ts", "src/**/*.tsx"],
     "exclude": ["dist"]

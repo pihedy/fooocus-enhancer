@@ -1,4 +1,4 @@
-import { slugify } from "../utils/slugify";
+import { slugify } from "@utils/slugify";
 
 /**
  * The `DataManager` class is responsible for managing and persisting application data.

@@ -2,8 +2,8 @@
  * @author: Pihedy
  */
 
-import { InputElement } from "../../classes/lora-models/InputElement";
-import { WordContainer } from "../../classes/lora-models/WordContainer";
+import { InputElement } from "@classes/lora-models/InputElement";
+import { WordContainer } from "@classes/lora-models/WordContainer";
 
 /**
  * Listens for the 'fooocus-enhancer-lora-input-change' event and handles the corresponding logic.

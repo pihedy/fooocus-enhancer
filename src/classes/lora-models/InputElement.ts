@@ -1,4 +1,4 @@
-import { slugify } from "../../utils/slugify";
+import { slugify } from "@utils/slugify";
 
 /**
  * Represents an input element and provides methods to interact with it.
