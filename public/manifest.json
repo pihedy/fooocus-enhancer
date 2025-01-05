@@ -4,9 +4,9 @@
     "version": "1.0.1",
     "description": "A powerful Chrome extension that enhances the Fooocus web UI experience by adding useful features and improvements.",
     "permissions": ["storage"],
-    "host_permissions": ["http://127.0.0.1:7865/*"],
+    "host_permissions": ["http://127.0.0.1/*"],
     "content_scripts": [{
-        "matches": ["http://127.0.0.1:7865/*"],
+        "matches": ["http://127.0.0.1/*"],
         "js": ["content.js"],
         "css": ["css/main.css"],
         "run_at": "document_idle"
