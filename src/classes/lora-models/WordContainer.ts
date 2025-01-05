@@ -1,5 +1,5 @@
-import { gradioApp } from "@components/gradioApp";
-import { storageDataManager } from "@components/storageDataManager";
+import { gradioApp } from "@/utils/gradioApp";
+import { storageDataManager } from "@/utils/storageDataManager";
 
 import { InputElement } from "./InputElement";
 
