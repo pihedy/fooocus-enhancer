@@ -1,5 +1,13 @@
+/** 
+ * This file is used to configure the webpack build process.
+ * 
+ * @author Pihedy
+ */
+
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
     entry: {
@@ -15,10 +23,11 @@ module.exports = {
     },
     resolve: {
         preferRelative: true,
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts', '.js', '.vue'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
             '@components': path.resolve(__dirname, 'src/components'),
+            '@elements': path.resolve(__dirname, 'src/elements'),
             '@styles': path.resolve(__dirname, 'src/styles'),
             '@utils': path.resolve(__dirname, 'src/utils'),
             '@events': path.resolve(__dirname, 'src/events'),
@@ -35,6 +44,10 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+            },
+            {
                 test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -48,6 +61,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'css/main.css',
         }),
+        new VueLoaderPlugin(),
     ],
     mode: 'production',
     devtool: false
