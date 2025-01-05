@@ -1,9 +1,15 @@
 <script setup lang="ts">
-
-console.log('FooterContact.vue');
-
+/* Do nothing. */
 </script>
 
 <template>
-    <div class="test">asdasd</div>
+    
+    <div class="fc-container">
+
+        <div class="separator">·</div>
+
+        <a href="https://github.com/pihedy/fooocus-enhancer">Fooocus Enhancer by Pihedy</a>
+
+    </div>
+
 </template>

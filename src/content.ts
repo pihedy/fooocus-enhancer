@@ -2,6 +2,8 @@
  * @author: Pihedy
  */
 
+import { createApp, defineCustomElement } from 'vue';
+
 import { gradioApp } from "@/utils/gradioApp";
 
 require('@events/initDataManager');
@@ -44,6 +46,8 @@ function init(): void {
         return;
     }
 
+    (require as any).context('@elements', false, /\.vue$/);
+
     Elements.forEach((Value: Element) => {
         let tag = Value.tagName.toLowerCase();
 
@@ -55,10 +59,18 @@ function init(): void {
             .replace(/-./g, (match) => match[1].toUpperCase())
             .replace(/^./, (match) => match.toUpperCase());
 
-        import(`@elements/${camel}.vue`).then(() => {
+        Value.removeAttribute('data-fc-element');
 
-        }).catch(() => {
+        import(`@elements/${camel}.vue`).then((Module) => {
+            if (!Module.default) {
+                throw new Error(`Module for ${camel} does not have a default export.`);
+            }
             
+            const App = createApp(Module.default);
+
+            App.mount(Value);
+        }).catch((err) => {            
+            console.error(`Failed to load component`, err);
         });
     });
 }

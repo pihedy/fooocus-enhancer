@@ -1,4 +1,7 @@
 /* Main SCSS */
 
+@use './global/container';
 @use './global/button';
+
 @use './elements/word-conatiner';
+@use './elements/footer-contact';

@@ -20,6 +20,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
+        publicPath: '',
+        chunkFilename: '[name].js',
     },
     resolve: {
         preferRelative: true,
@@ -40,7 +42,14 @@ module.exports = {
         rules: [
             {
                 test: /\.ts$/,
-                use: 'ts-loader',
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            appendTsSuffixTo: [/\.vue$/],
+                        },
+                    },
+                ],
                 exclude: /node_modules/,
             },
             {
@@ -63,6 +72,9 @@ module.exports = {
         }),
         new VueLoaderPlugin(),
     ],
+    optimization: {
+        splitChunks: false,
+    },
     mode: 'production',
     devtool: false
 };
