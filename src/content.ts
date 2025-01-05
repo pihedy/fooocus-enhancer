@@ -2,7 +2,7 @@
  * @author: Pihedy
  */
 
-import { gradioApp } from "@components/gradioApp";
+import { gradioApp } from "@/utils/gradioApp";
 
 require('@events/initDataManager');
 require('@events/addFooterFlag');
@@ -34,4 +34,31 @@ function init(): void {
     gradioApp().setElement(Collection[0]);
 
     document.dispatchEvent(new CustomEvent('fooocus-enhancer-ready'));
+
+    /** 
+     * TODO: Ez ki lehet majd szervezni!
+     */
+    let Elements = document.querySelectorAll('[data-fc-element]');
+
+    if (Elements.length <= 0) {
+        return;
+    }
+
+    Elements.forEach((Value: Element) => {
+        let tag = Value.tagName.toLowerCase();
+
+        if (!tag.startsWith('fc-')) {
+            return;
+        }
+
+        let camel = tag.slice('fc-'.length)
+            .replace(/-./g, (match) => match[1].toUpperCase())
+            .replace(/^./, (match) => match.toUpperCase());
+
+        import(`@elements/${camel}.vue`).then(() => {
+
+        }).catch(() => {
+            
+        });
+    });
 }
