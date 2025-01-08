@@ -1,3 +1,5 @@
+import { EnhancerElementFactory } from "@/classes/Factories/EnhancerElementFactory";
+
 /**
  * The GradioApp class is a singleton that manages the Gradio element in the application.
  * 
@@ -62,8 +64,19 @@ export class GradioApp {
         return this.Gradio?.getElementsByTagName(tag);
     }
 
+    /**
+     * Retrieves a NodeList of elements that match the specified CSS selector query.
+     *
+     * @param query - The CSS selector query to match elements against.
+     * 
+     * @returns A NodeList of elements that match the specified query, or `undefined` if the Gradio element is not set.
+     */
     public find(query: string): NodeListOf<Element>|undefined {
         return this.Gradio?.querySelectorAll(query);
+    }
+
+    public findEnhancers(): NodeListOf<Element>|undefined {
+        return this.find(`[data-${EnhancerElementFactory.elementPrefix}-element]`);
     }
 
     /**

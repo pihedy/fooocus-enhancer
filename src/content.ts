@@ -5,6 +5,7 @@
 import { createApp, defineCustomElement } from 'vue';
 
 import { gradioApp } from "@/utils/gradioApp";
+import { customElementsPolyfill } from './utils/customElementsPolyfill';
 
 require('@events/initDataManager');
 require('@events/addFooterFlag');
@@ -40,35 +41,62 @@ function init(): void {
     /** 
      * TODO: Ez ki lehet majd szervezni!
      */
-    let Elements = document.querySelectorAll('[data-fc-element]');
+    let Elements = gradioApp().findEnhancers();
 
-    if (Elements.length <= 0) {
+    if (typeof Elements === 'undefined' || Elements.length <= 0) {
         return;
     }
 
     (require as any).context('@elements', false, /\.vue$/);
 
+    const rootApp = createApp({});
+
     Elements.forEach((Value: Element) => {
         let tag = Value.tagName.toLowerCase();
 
-        if (!tag.startsWith('fc-')) {
+        if (!tag.startsWith('fe-')) {
             return;
         }
 
-        let camel = tag.slice('fc-'.length)
+        let camel = tag.slice('fe-'.length)
             .replace(/-./g, (match) => match[1].toUpperCase())
             .replace(/^./, (match) => match.toUpperCase());
 
-        Value.removeAttribute('data-fc-element');
+        Value.removeAttribute('data-fe-element');
 
         import(`@elements/${camel}.vue`).then((Module) => {
             if (!Module.default) {
                 throw new Error(`Module for ${camel} does not have a default export.`);
             }
-            
-            const App = createApp(Module.default);
 
-            App.mount(Value);
+            if (customElementsPolyfill().get(tag) !== null) {
+                return;
+            }
+
+            class VueWrapper extends HTMLElement {
+                private vueApp: any;
+                
+                connectedCallback() {
+                    const container = document.createElement('div');
+                    container.style.display = 'contents';
+
+                    this.appendChild(container);
+                    
+                    this.vueApp = createApp(Module.default);
+
+                    Object.assign(this.vueApp._context, rootApp._context);
+
+                    this.vueApp.mount(container);
+                }
+        
+                disconnectedCallback() {
+                    if (this.vueApp) {
+                        this.vueApp.unmount();
+                    }
+                }
+            }
+
+            customElementsPolyfill().define(tag, VueWrapper);
         }).catch((err) => {            
             console.error(`Failed to load component`, err);
         });
