@@ -11,6 +11,6 @@ import { EnhancerElementFactory } from "@/classes/Factories/EnhancerElementFacto
  */
 document.addEventListener('fooocus-enhancer-ready', () => {
     gradioApp().getTag('footer')?.appendChild(
-        EnhancerElementFactory.create('footer-contact')
+        EnhancerElementFactory.create('footer-flag-element')
     );
 });

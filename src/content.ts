@@ -2,15 +2,15 @@
  * @author: Pihedy
  */
 
-import { createApp, defineCustomElement } from 'vue';
+import { createApp } from 'vue';
 
 import { gradioApp } from "@/utils/gradioApp";
 import { customElementsPolyfill } from './utils/customElementsPolyfill';
 
-require('@events/initDataManager');
-require('@events/addFooterFlag');
+require('@events/ready/initDataManager');
+require('@events/ready/addFooterFlagElement');
+require('@events/ready/addtLoraWordElement');
 
-require('@events/lora-models/initLoraInputChange');
 require('@events/lora-models/changeWordContainer');
 
 const initInterval = setInterval(() => {
@@ -81,14 +81,19 @@ function init(): void {
                     container.style.display = 'contents';
 
                     this.appendChild(container);
+
+                    const props: { [key: string]: string } = {};
+
+                    for (let Attribute of this.attributes) {
+                        props[Attribute.name] = Attribute.value;
+                    }
                     
-                    this.vueApp = createApp(Module.default);
+                    this.vueApp = createApp(Module.default, props);
 
                     Object.assign(this.vueApp._context, rootApp._context);
 
                     this.vueApp.mount(container);
-                }
-        
+                }        
                 disconnectedCallback() {
                     if (this.vueApp) {
                         this.vueApp.unmount();
