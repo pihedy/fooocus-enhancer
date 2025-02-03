@@ -5,6 +5,8 @@
 import { createApp } from 'vue';
 
 import { gradioApp } from "@/utils/gradioApp";
+import { vueWrapper } from '@/utils/vueWrapper';
+
 import { customElementsPolyfill } from './utils/customElementsPolyfill';
 
 require('@events/ready/initDataManager');
@@ -73,35 +75,7 @@ function init(): void {
                 return;
             }
 
-            class VueWrapper extends HTMLElement {
-                private vueApp: any;
-                
-                connectedCallback() {
-                    const container = document.createElement('div');
-                    container.style.display = 'contents';
-
-                    this.appendChild(container);
-
-                    const props: { [key: string]: string } = {};
-
-                    for (let Attribute of this.attributes) {
-                        props[Attribute.name] = Attribute.value;
-                    }
-                    
-                    this.vueApp = createApp(Module.default, props);
-
-                    Object.assign(this.vueApp._context, rootApp._context);
-
-                    this.vueApp.mount(container);
-                }        
-                disconnectedCallback() {
-                    if (this.vueApp) {
-                        this.vueApp.unmount();
-                    }
-                }
-            }
-
-            customElementsPolyfill().define(tag, VueWrapper);
+            customElementsPolyfill().define(tag, vueWrapper(rootApp, Module));
         }).catch((err) => {            
             console.error(`Failed to load component`, err);
         });
