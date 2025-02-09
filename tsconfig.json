@@ -14,7 +14,9 @@
             "@elements/*": ["src/elements/*"],
             "@styles/*": ["src/styles/*"],
             "@utils/*": ["src/utils/*"],
+            "@stores/*": ["src/stores/*"],
             "@events/*": ["src/events/*"],
+            "@interfaces/*": ["src/interfaces/*"],
             "@classes/*": ["src/classes/*"],
             "@node_modules/*": ["node_modules/*"]
         }

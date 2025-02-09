@@ -1,3 +1,4 @@
+import { ModelStore } from "@/stores/ModelStore";
 import { slugify } from "@utils/slugify";
 
 /**
@@ -5,7 +6,7 @@ import { slugify } from "@utils/slugify";
  * 
  * @author Pihedy
  */
-export class InputElement {
+export class LoraInputElement {
 
     /**
      * Creates a new `InputElement` instance from the provided `HTMLInputElement`.
@@ -14,8 +15,8 @@ export class InputElement {
      * 
      * @returns A new `InputElement` instance.
      */
-    public static init(Input: HTMLInputElement): InputElement {
-        return new InputElement(Input);
+    public static init(Input: HTMLInputElement): LoraInputElement {
+        return new LoraInputElement(Input);
     }
 
     /**
@@ -42,9 +43,16 @@ export class InputElement {
                 return;
             }
 
-            document.dispatchEvent(
-                new CustomEvent('fooocus-enhancer-lora-input-change', {detail: this})
-            );
+            let componentId = Target.closest('div.form')?.parentElement?.getAttribute('id');
+
+            if (typeof componentId === 'undefined') {
+                componentId = null;
+            }
+
+            ModelStore.value = {
+                model_id: componentId,
+                lora: this.getValue(true)
+            };
         });
 
         const Closest = this.Input.closest('div.wrap-inner');

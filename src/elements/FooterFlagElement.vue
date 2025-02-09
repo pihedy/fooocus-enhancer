@@ -4,11 +4,15 @@
 
 <template>
     
-    <div class="fc-container">
+    <div class="fe-container p-0 m-0">
 
-        <div class="separator">·</div>
+        <div class="row">
 
-        <a href="https://github.com/pihedy/fooocus-enhancer">Fooocus Enhancer by Pihedy</a>
+            <div class="separator mx-1">·</div>
+
+            <a href="https://github.com/pihedy/fooocus-enhancer">Fooocus Enhancer by Pihedy</a>
+
+        </div>
 
     </div>
 

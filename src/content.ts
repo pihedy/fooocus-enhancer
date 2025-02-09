@@ -13,8 +13,6 @@ require('@events/ready/initDataManager');
 require('@events/ready/addFooterFlagElement');
 require('@events/ready/addtLoraWordElement');
 
-require('@events/lora-models/changeWordContainer');
-
 const initInterval = setInterval(() => {
     if (document.readyState !== 'complete') {
         return;

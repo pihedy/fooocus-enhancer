@@ -64,6 +64,16 @@ export class GradioApp {
         return this.Gradio?.getElementsByTagName(tag);
     }
 
+    public getPositivePromptArea(): HTMLTextAreaElement|null {
+        let areas = this.find('div#positive_prompt textarea');
+
+        if (!areas || areas.length <= 0 || !(areas[0] instanceof HTMLTextAreaElement)) {
+            return null;
+        }
+
+        return areas[0];
+    }
+
     /**
      * Retrieves a NodeList of elements that match the specified CSS selector query.
      *
@@ -75,6 +85,11 @@ export class GradioApp {
         return this.Gradio?.querySelectorAll(query);
     }
 
+    /**
+     * Retrieves a NodeList of elements that match the specified CSS selector query for Gradio enhancers.
+     *
+     * @returns A NodeList of elements that match the specified query.
+     */
     public findEnhancers(): NodeListOf<Element>|undefined {
         return this.find(`[data-${EnhancerElementFactory.elementPrefix}-element]`);
     }

@@ -1,6 +1,10 @@
 /* Main SCSS */
 
+@use './global/variables';
+@use './global/mixins';
+
 @use './global/container';
+@use './global/elements';
 @use './global/button';
 
 @use './elements/word-conatiner';
