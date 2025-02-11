@@ -2,7 +2,7 @@
  * @author Pihedy
  */
 
-import { LoraInputElement } from "@/classes/Observers/LoraInputElement";
+import { LoraDropdownElement } from "@/classes/Observers/LoraDropdownElement";
 import { gradioApp } from "@/utils/gradioApp";
 
 import { EnhancerElementFactory } from "@/classes/Factories/EnhancerElementFactory";
@@ -34,7 +34,7 @@ document.addEventListener('fooocus-enhancer-ready', () => {
             return;
         }
 
-        let Input = new LoraInputElement(inputs[0]);
+        let Input = new LoraDropdownElement(inputs[0]);
 
         Input.setObserver();
     });

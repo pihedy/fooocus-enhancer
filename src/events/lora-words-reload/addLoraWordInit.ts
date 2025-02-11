@@ -3,9 +3,9 @@
  */
 
 import { gradioApp } from "@/utils/gradioApp";
-import { LoraInputElement } from "@/classes/Observers/LoraInputElement";
+import { LoraDropdownElement } from "@/classes/Observers/LoraDropdownElement";
 
-document.addEventListener('fooocus-enhancer-all-mount-after', () => {
+document.addEventListener('fooocus-enhancer-lora-words-reload', () => {
     gradioApp().find('div.lora_model')?.forEach((Element: Element) => {
         let Component = Element.closest('div.form')?.parentElement;
         
@@ -25,7 +25,7 @@ document.addEventListener('fooocus-enhancer-all-mount-after', () => {
             return;
         }
 
-        let Input = new LoraInputElement(inputs[0]);
+        let Input = new LoraDropdownElement(inputs[0]);
 
         Input.forcedUpdate();
     });

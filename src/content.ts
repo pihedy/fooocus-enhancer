@@ -15,7 +15,7 @@ require('@events/ready/initDataManager');
 require('@events/ready/addFooterFlagElement');
 require('@events/ready/addtLoraWordObserver');
 
-require('@events/all-mount-after/addLoraWordInit');
+require('@events/lora-words-reload/addLoraWordInit');
 
 const initInterval = setInterval(() => {
     if (document.readyState !== 'complete') {
@@ -90,6 +90,6 @@ function init(): void {
             return;
         }
 
-        document.dispatchEvent(new CustomEvent('fooocus-enhancer-all-mount-after'));
+        document.dispatchEvent(new CustomEvent('fooocus-enhancer-lora-words-reload'));
     });
 }

@@ -6,7 +6,7 @@ import { slugify } from "@utils/slugify";
  * 
  * @author Pihedy
  */
-export class LoraInputElement {
+export class LoraDropdownElement {
 
     /**
      * Creates a new `InputElement` instance from the provided `HTMLInputElement`.
@@ -15,8 +15,8 @@ export class LoraInputElement {
      * 
      * @returns A new `InputElement` instance.
      */
-    public static init(Input: HTMLInputElement): LoraInputElement {
-        return new LoraInputElement(Input);
+    public static init(Input: HTMLInputElement): LoraDropdownElement {
+        return new LoraDropdownElement(Input);
     }
 
     /**
@@ -75,6 +75,9 @@ export class LoraInputElement {
         });
     }
 
+    /**
+     * Forces an update of the dropdown input element's value in the ModelStore.
+     */
     public forcedUpdate(): void {
         const Closest = this.Input.closest('div.wrap-inner');
 
@@ -87,6 +90,8 @@ export class LoraInputElement {
         if (componentId === null || typeof componentId === 'undefined') {
             return;
         }
+
+        console.log(this.getValue(true));
 
         ModelStore.value.loras[componentId] = this.getValue(true);
     }
