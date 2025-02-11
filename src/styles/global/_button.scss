@@ -1,29 +1,22 @@
 /* Global Buttons SCSS */
 
-.fe-actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.fe-button {
-    width: fit-content;
-    margin: 0 0.125rem;
-    padding: 0.1rem 0.6rem;
-    background: white;
-    border-radius: 0.313rem;
-    border: 1px solid rgb(183 183 183) !important;
-    text-align: center;
-    line-height: normal;
-    user-select: none;
+.btn {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0.25rem;
     cursor: pointer;
+    transition: background-color 0.2s;
+    user-select: none;
 
-    &:first-child {
-        margin-left: 0;
+    &:hover {
+        background-color: darken(#007bff, 5%);
     }
 
-    &:last-child {
-        margin-right: 0;
+    &:disabled {
+        background-color: lighten(#007bff, 20%);
+        cursor: not-allowed;
     }
 }

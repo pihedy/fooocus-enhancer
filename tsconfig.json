@@ -1,21 +1,26 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "module": "es6",
+        "module": "es2020",
+        "moduleResolution": "node",
         "outDir": "./dist",
         "strict": true,
+        "esModuleInterop": true,
         "rootDir": "./src",
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"],
             "@components/*": ["src/components/*"],
+            "@elements/*": ["src/elements/*"],
             "@styles/*": ["src/styles/*"],
             "@utils/*": ["src/utils/*"],
+            "@stores/*": ["src/stores/*"],
             "@events/*": ["src/events/*"],
+            "@interfaces/*": ["src/interfaces/*"],
             "@classes/*": ["src/classes/*"],
             "@node_modules/*": ["node_modules/*"]
         }
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx"],
-    "exclude": ["dist"]
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+    "exclude": ["node_modules", "dist"]
 }

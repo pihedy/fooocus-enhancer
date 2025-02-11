@@ -2,7 +2,7 @@
  * @author: Pihedy
  */
 
-import { DataManager } from "@/classes/StorageDataManager";
+import { DataManager } from "@/classes/Managers/StorageDataManager";
 
 /**
  * Returns the singleton instance of the `DataManager` class.

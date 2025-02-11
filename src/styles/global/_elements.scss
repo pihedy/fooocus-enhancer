@@ -1,0 +1,32 @@
+/* Elements SCSS */
+
+textarea {
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    resize: vertical;
+    outline: 0;
+    border: 0.0625rem solid #8b8b8b !important;
+
+    &:focus {
+        border: 0.0625rem solid #0172ad !important;
+    }
+
+    &.light {
+        color: #23262c !important;
+        background-color: #fff !important;
+        border-radius: 0.25rem !important;
+        box-shadow: 0 0 0 0.0625rem #0172ad !important;
+    }
+
+    .disabled {
+        background: #9b9fa7 !important;
+        pointer-events: none;
+    }
+
+    &:disabled {
+        background-color: #f9f9f9 !important;
+        color: #777 !important;
+        border: 1px solid #ccc !important;
+    }
+}

@@ -1,0 +1,52 @@
+/* Mixins SCSS */
+
+$spacer: 0.5rem;
+$maxSteps: 8;
+
+$directions: ('t': 'top',
+    'r': 'right',
+    'b': 'bottom',
+    'l': 'left'
+);
+
+@for $i from 0 through $maxSteps {
+
+    .p-#{$i} {
+        padding: $i * $spacer !important;
+    }
+
+    .m-#{$i} {
+        margin: $i * $spacer;
+    }
+
+    .px-#{$i} {
+        padding-left: $i * $spacer;
+        padding-right: $i * $spacer;
+    }
+
+    .mx-#{$i} {
+        margin-left: $i * $spacer;
+        margin-right: $i * $spacer;
+    }
+
+    .py-#{$i} {
+        padding-top: $i * $spacer;
+        padding-bottom: $i * $spacer;
+    }
+
+    .my-#{$i} {
+        margin-top: $i * $spacer;
+        margin-bottom: $i * $spacer;
+    }
+
+    @each $short,
+    $long in $directions {
+        .p#{$short}-#{$i} {
+            padding-#{$long}: $i * $spacer;
+        }
+
+        .m#{$short}-#{$i} {
+            margin-#{$long}: $i * $spacer;
+        }
+    }
+}

@@ -2,13 +2,20 @@
  * @author: Pihedy
  */
 
-import { gradioApp } from "@components/gradioApp";
+import { createApp, watch } from 'vue';
 
-require('@events/initDataManager');
-require('@events/addFooterFlag');
+import { gradioApp } from "@/utils/gradioApp";
+import { vueWrapper } from '@/utils/vueWrapper';
 
-require('@events/lora-models/initLoraInputChange');
-require('@events/lora-models/changeWordContainer');
+import { customElementsPolyfill } from './utils/customElementsPolyfill';
+import { MountStore } from './stores/MountStore';
+
+require('@events/ready/initDataManager');
+
+require('@events/ready/addFooterFlagElement');
+require('@events/ready/addtLoraWordObserver');
+
+require('@events/lora-words-reload/addLoraWordInit');
 
 const initInterval = setInterval(() => {
     if (document.readyState !== 'complete') {
@@ -34,4 +41,55 @@ function init(): void {
     gradioApp().setElement(Collection[0]);
 
     document.dispatchEvent(new CustomEvent('fooocus-enhancer-ready'));
+
+    /** 
+     * TODO: Ez ki lehet majd szervezni!
+     */
+    let Elements = gradioApp().findEnhancers();
+
+    if (typeof Elements === 'undefined' || Elements.length <= 0) {
+        return;
+    }
+
+    MountStore.value.total = Elements.length;
+
+    (require as any).context('@elements', false, /\.vue$/);
+
+    const rootApp = createApp({});
+
+    Elements.forEach((Value: Element) => {
+        let tag = Value.tagName.toLowerCase();
+
+        if (!tag.startsWith('fe-')) {
+            return;
+        }
+
+        let camel = tag.slice('fe-'.length)
+            .replace(/-./g, (match) => match[1].toUpperCase())
+            .replace(/^./, (match) => match.toUpperCase());
+
+        Value.removeAttribute('data-fe-element');
+
+        import(`@elements/${camel}.vue`).then((Module) => {
+            if (!Module.default) {
+                throw new Error(`Module for ${camel} does not have a default export.`);
+            }
+
+            if (customElementsPolyfill().get(tag) !== null) {
+                return;
+            }
+
+            customElementsPolyfill().define(tag, vueWrapper(rootApp, Module));
+        }).catch((err) => {            
+            console.error(`Failed to load component`, err);
+        });
+    });
+
+    watch(() => MountStore.value.current, (newValue) => {
+        if (newValue !== MountStore.value.total) {
+            return;
+        }
+
+        document.dispatchEvent(new CustomEvent('fooocus-enhancer-lora-words-reload'));
+    });
 }
