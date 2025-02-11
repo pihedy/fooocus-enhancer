@@ -29,6 +29,17 @@ export class LoraInputElement {
     }
 
     /**
+     * Gets the value of the input element, optionally slugifying it.
+     *
+     * @param turnToSlugify - Whether to slugify the input value.
+     * 
+     * @returns The input value, optionally slugified.
+     */
+    public getValue(turnToSlugify: boolean = false): string {
+        return turnToSlugify ? slugify(this.Input.value) : this.Input.value;
+    }
+
+    /**
      * Sets up a mutation observer on the closest `div.wrap-inner` element to the input element.
      */
     public setObserver(): void {
@@ -45,14 +56,11 @@ export class LoraInputElement {
 
             let componentId = Target.closest('div.form')?.parentElement?.getAttribute('id');
 
-            if (typeof componentId === 'undefined') {
-                componentId = null;
+            if (componentId === null || typeof componentId === 'undefined') {
+                return;
             }
 
-            ModelStore.value = {
-                model_id: componentId,
-                lora: this.getValue(true)
-            };
+            ModelStore.value.loras[componentId] = this.getValue(true);
         });
 
         const Closest = this.Input.closest('div.wrap-inner');
@@ -67,32 +75,19 @@ export class LoraInputElement {
         });
     }
 
-    /**
-     * Gets the value of the input element, optionally slugifying it.
-     *
-     * @param turnToSlugify - Whether to slugify the input value.
-     * 
-     * @returns The input value, optionally slugified.
-     */
-    public getValue(turnToSlugify: boolean = false): string {
-        return turnToSlugify ? slugify(this.Input.value) : this.Input.value;
-    }
+    public forcedUpdate(): void {
+        const Closest = this.Input.closest('div.wrap-inner');
 
-    /**
-     * Gets the HTML input element that this `InputElement` instance wraps.
-     * 
-     * @returns The HTML input element.
-     */
-    public getInput(): HTMLInputElement {
-        return this.Input;
-    }
+        if (!Closest || Closest?.classList?.contains('showOptions')) {
+            return;
+        }
 
-    /**
-     * Gets the closest HTML element that represents the row of the input element.
-     * 
-     * @returns The closest HTML element that represents the row of the input element, or `null` if not found.
-     */
-    public getRow(): HTMLElement|null {
-        return this.Input.closest('div.form')?.parentElement ?? null;
+        let componentId = Closest.closest('div.form')?.parentElement?.getAttribute('id');
+
+        if (componentId === null || typeof componentId === 'undefined') {
+            return;
+        }
+
+        ModelStore.value.loras[componentId] = this.getValue(true);
     }
 }

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 import { ModelStore } from '@/stores/ModelStore';
+import { MountStore } from '@/stores/MountStore';
+
 import { storageDataManager } from '@/utils/storageDataManager';
 
 import { gradioApp } from '@/utils/gradioApp';
@@ -14,17 +16,17 @@ let props = defineProps({
     }
 });
 
+onMounted(() => {
+    MountStore.value.current += 1;
+});
+
 let isEdit = ref<boolean>(false);
 let isShowed = ref<boolean>(false);
 
 let loraWords = ref<string>('');
 
-watch(ModelStore, (NewModel) => {
-    if (NewModel.model_id !== props.model_id) {
-        return;
-    }
-
-    if (NewModel.lora === 'none' || NewModel.lora === '' || NewModel.lora === null) {
+watch(() => ModelStore.value.loras[props.model_id], (newVal) => {
+    if (!newVal || newVal == 'none') {
         isShowed.value = false;
 
         return;
@@ -32,7 +34,7 @@ watch(ModelStore, (NewModel) => {
 
     isShowed.value = true;
     loraWords.value = storageDataManager().get(
-        `lora_words.${ModelStore.value.lora}`, 
+        `lora_words.${newVal}`, 
         []
     ).join(', ');
 });
@@ -43,7 +45,7 @@ watch(isEdit, (editState) => {
     }
 
     storageDataManager().set(
-        `lora_words.${ModelStore.value.lora}`, 
+        `lora_words.${ModelStore.value.loras[props.model_id]}`, 
         loraWords.value.replace(/, /g, ',').split(',')
     );
 });
@@ -77,7 +79,7 @@ function insertPrompt(): void {
 
         <div class="row mb-1">
             <textarea 
-                :name="ModelStore.model_id || undefined" 
+                :name="ModelStore.loras[props.model_id] || undefined" 
                 :class="['light', { disabled: !isEdit }]"
                 v-model="loraWords"
                 :disabled="!isEdit"

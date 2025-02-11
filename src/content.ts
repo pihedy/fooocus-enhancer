@@ -2,16 +2,20 @@
  * @author: Pihedy
  */
 
-import { createApp } from 'vue';
+import { createApp, watch } from 'vue';
 
 import { gradioApp } from "@/utils/gradioApp";
 import { vueWrapper } from '@/utils/vueWrapper';
 
 import { customElementsPolyfill } from './utils/customElementsPolyfill';
+import { MountStore } from './stores/MountStore';
 
 require('@events/ready/initDataManager');
+
 require('@events/ready/addFooterFlagElement');
-require('@events/ready/addtLoraWordElement');
+require('@events/ready/addtLoraWordObserver');
+
+require('@events/all-mount-after/addLoraWordInit');
 
 const initInterval = setInterval(() => {
     if (document.readyState !== 'complete') {
@@ -47,6 +51,8 @@ function init(): void {
         return;
     }
 
+    MountStore.value.total = Elements.length;
+
     (require as any).context('@elements', false, /\.vue$/);
 
     const rootApp = createApp({});
@@ -77,5 +83,13 @@ function init(): void {
         }).catch((err) => {            
             console.error(`Failed to load component`, err);
         });
+    });
+
+    watch(() => MountStore.value.current, (newValue) => {
+        if (newValue !== MountStore.value.total) {
+            return;
+        }
+
+        document.dispatchEvent(new CustomEvent('fooocus-enhancer-all-mount-after'));
     });
 }

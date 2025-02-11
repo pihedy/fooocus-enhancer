@@ -2,7 +2,9 @@
  * @author: Pihedy
  */
 
+/**
+ * Defines the interface for a model data store, which is responsible for managing the storage and retrieval of model data.
+ */
 export interface ModelDataStoreInterface {
-    model_id: null|string;
-    lora: null|string;
+    loras: Record<string, string>;
 }

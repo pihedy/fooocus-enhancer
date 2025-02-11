@@ -1,5 +1,12 @@
 <script setup lang="ts">
-/* Do nothing. */
+
+import { onMounted } from 'vue';
+import { MountStore } from '@/stores/MountStore';
+
+onMounted(() => {
+    MountStore.value.current += 1;
+});
+
 </script>
 
 <template>
