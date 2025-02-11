@@ -12,7 +12,7 @@ I made it primarily for my own use, but I also looked at the project more during
 ## Roadmap
 
 - [x]  Save, edit and paste trigger words from downloaded lora models to the positive prompt.
-- [ ]  VueJS for easier template management (or some good solution).
+- [x]  VueJS for easier template management (or some good solution).
 - [ ]  Export settings options.
 - [ ]  CivitAI profile integration.
 - [ ]  Download models from CivitAI.
