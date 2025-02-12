@@ -84,6 +84,7 @@ function insertPrompt(): void {
                 v-model="loraWords"
                 :disabled="!isEdit"
                 :readonly="!isEdit"
+                placeholder="Write the LoRA trigger words here..."
             ></textarea>
         </div>
 
