@@ -12,11 +12,11 @@
     user-select: none;
 
     &:hover {
-        background-color: darken(#007bff, 5%);
+        background-color: #2d93ff;
     }
 
     &:disabled {
-        background-color: lighten(#007bff, 20%);
+        background-color: #0063cc;
         cursor: not-allowed;
     }
 }
