@@ -1,6 +1,7 @@
 /* Main SCSS */
 
 @use './global/variables';
+
 @use './global/mixins';
 
 @use './global/container';
@@ -9,3 +10,4 @@
 
 @use './elements/word-conatiner';
 @use './elements/footer-contact';
+@use './elements/popup';

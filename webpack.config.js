@@ -10,12 +10,16 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const { DefinePlugin } = require('webpack');
 
+const ComponentsPlugin = require('unplugin-vue-components/webpack').default;
+const { PrimeVueResolver } = require('unplugin-vue-components/resolvers');
+
 module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
 
     return {
         entry: {
             content: './src/content.ts',
+            popup: './src/popup.ts',
             styles: {
                 import: './src/styles/main.scss',
                 runtime: false
@@ -82,6 +86,12 @@ module.exports = (env, argv) => {
                 __VUE_PROD_DEVTOOLS__: JSON.stringify(!isProduction),
                 __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false),
             }),
+            ComponentsPlugin({
+                dirs: ['src/components'],
+                dts: path.resolve(__dirname, 'src/components.d.ts'),
+                version: 3,
+                resolvers: [PrimeVueResolver()],
+            })
         ],
         optimization: {
             splitChunks: false,

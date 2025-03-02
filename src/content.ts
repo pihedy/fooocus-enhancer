@@ -3,12 +3,17 @@
  */
 
 import { createApp, watch } from 'vue';
+import { storage } from '@extend-chrome/storage';
 
 import { gradioApp } from "@/utils/gradioApp";
 import { vueWrapper } from '@/utils/vueWrapper';
 
-import { customElementsPolyfill } from './utils/customElementsPolyfill';
-import { MountStore } from './stores/MountStore';
+import { customElementsPolyfill } from '@/utils/customElementsPolyfill';
+import { count } from '@/utils/count';
+
+import { MountStore } from '@/stores/MountStore';
+
+import { SettingsInterface } from '@/interfaces/SettingsInterface';
 
 require('@events/ready/initDataManager');
 
@@ -21,10 +26,47 @@ const initInterval = setInterval(() => {
     if (document.readyState !== 'complete') {
         return;
     }
+    
+    try {
+        const url = window.location.href;
 
-    init();
+        let isValid = false;
 
-    clearInterval(initInterval);
+        storage.local.get<SettingsInterface>({accepted_urls: []}).then((result) => {
+            if (count(result.accepted_urls) <= 0) {
+                return;
+            }
+    
+            if (!Array.isArray(result.accepted_urls)) {
+                result.accepted_urls = Object.values(result.accepted_urls);
+            }
+    
+            for (const filter of result.accepted_urls) {
+                const regex = new RegExp(filter.url);
+
+                
+                if (!regex.test(url)) {
+                    continue;
+                }
+                
+                isValid = true;
+
+                break;
+            }
+
+            if (!isValid) {
+                clearInterval(initInterval);
+
+                return;
+            }
+
+            init();
+
+            clearInterval(initInterval);
+        });
+    } catch (error) {
+        console.log(error);
+    }
 }, 250);
 
 /**
