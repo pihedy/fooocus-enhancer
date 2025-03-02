@@ -22,52 +22,50 @@ require('@events/ready/addtLoraWordObserver');
 
 require('@events/lora-words-reload/addLoraWordInit');
 
-const initInterval = setInterval(() => {
-    if (document.readyState !== 'complete') {
-        return;
-    }
-    
-    try {
-        const url = window.location.href;
+try {
+    const url = window.location.href;
 
-        let isValid = false;
+    let isValid = false;
 
-        storage.local.get<SettingsInterface>({accepted_urls: []}).then((result) => {
-            if (count(result.accepted_urls) <= 0) {
+    storage.local.get<SettingsInterface>({accepted_urls: []}).then((result) => {
+        if (count(result.accepted_urls) <= 0) {
+            return;
+        }
+
+        if (!Array.isArray(result.accepted_urls)) {
+            result.accepted_urls = Object.values(result.accepted_urls);
+        }
+
+        for (const filter of result.accepted_urls) {
+            const regex = new RegExp(filter.url);
+
+            
+            if (!regex.test(url)) {
+                continue;
+            }
+            
+            isValid = true;
+
+            break;
+        }
+
+        if (!isValid) {
+            return;
+        }
+
+        const initInterval = setInterval(() => {
+            if (document.readyState !== 'complete') {
                 return;
             }
-    
-            if (!Array.isArray(result.accepted_urls)) {
-                result.accepted_urls = Object.values(result.accepted_urls);
-            }
-    
-            for (const filter of result.accepted_urls) {
-                const regex = new RegExp(filter.url);
-
-                
-                if (!regex.test(url)) {
-                    continue;
-                }
-                
-                isValid = true;
-
-                break;
-            }
-
-            if (!isValid) {
-                clearInterval(initInterval);
-
-                return;
-            }
-
+        
             init();
 
             clearInterval(initInterval);
-        });
-    } catch (error) {
-        console.log(error);
-    }
-}, 250);
+        }, 250);
+    });
+} catch (error) {
+    console.log(error);
+}
 
 /**
  * Initializes the Gradio application by finding the first 'gradio-app' element on the page and setting it as the active element.
