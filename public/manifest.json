@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "matches": [
-        "http://127.0.0.1/*"
+        "<all_urls>"
       ],
       "js": [
         "content.js"
