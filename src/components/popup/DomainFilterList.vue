@@ -49,8 +49,12 @@ onMounted(() => {
             }];
         }
 
-        if (count(result.accepted_urls) > 0 && !Array.isArray(result.accepted_urls)) {
+        if (count(result.accepted_urls) > 0) {
             result.accepted_urls = Object.values(result.accepted_urls);
+        }
+
+        if (!Array.isArray(result.accepted_urls)) {
+            result.accepted_urls = [];
         }
 
         settings.value = result;
