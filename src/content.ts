@@ -22,12 +22,18 @@ require('@events/ready/addtLoraWordObserver');
 
 require('@events/lora-words-reload/addLoraWordInit');
 
+let invalidated = false;
+
 try {
     const url = window.location.href;
 
     let isValid = false;
 
     storage.local.get<SettingsInterface>({accepted_urls: []}).then((result) => {
+        if (invalidated) {
+            return;
+        }
+
         if (count(result.accepted_urls) <= 0) {
             return;
         }
@@ -66,6 +72,10 @@ try {
 } catch (error) {
     console.log(error);
 }
+
+window.addEventListener('unload', () => {
+    invalidated = true;
+});
 
 /**
  * Initializes the Gradio application by finding the first 'gradio-app' element on the page and setting it as the active element.
