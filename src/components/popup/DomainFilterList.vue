@@ -1,9 +1,14 @@
 <script setup lang="ts">
 
 import { ref, onMounted } from 'vue';
+
+import { storage } from '@extend-chrome/storage';
+import { SettingsInterface } from '@/interfaces/SettingsInterface';
 import { count } from '@/utils/count';
 
-let accepted = ref<Record<string, string>[]>([]);
+let settings = ref<SettingsInterface>({
+    accepted_urls: []
+});
 
 let newField = ref({
     name: '',
@@ -11,9 +16,9 @@ let newField = ref({
 });
 
 function deleteRow(index: number): void {
-    accepted.value.splice(index, 1);
+    settings.value.accepted_urls.splice(index, 1);
 
-    saveAcceptedOnly();
+    saveSettings();
 }
 
 function addRow(): void {
@@ -21,48 +26,36 @@ function addRow(): void {
         return;
     }
 
-    accepted.value.push({
+    settings.value.accepted_urls.push({
         name: newField.value.name,
-        address: newField.value.address
+        url: newField.value.address
     });
 
-    saveAcceptedOnly();
+    saveSettings();
 
     newField.value = {name: '', address: ''};
 }
 
-function saveAcceptedOnly() {
-    chrome.storage.local.get(['fooocus_enhancer'], (result) => {
-        let data = result.fooocus_enhancer || {};
-
-        data.accepted = accepted.value;
-
-        chrome.storage.local.set({ fooocus_enhancer: data }, () => {
-            console.log('Accepted is updated.', data);
-        });
-    });
+function saveSettings(): void {
+    storage.local.set(settings.value);
 }
 
 onMounted(() => {
-    chrome.storage.local.get(['fooocus_enhancer'], (result) => {
-        const data = result.fooocus_enhancer ?? {};
-
-        if (!data.accepted || count(data.accepted) === 0) {
-            data.accepted = [{ 
-                name: 'Default', 
-                address: 'http://127.0.0.1:7865'
+    storage.local.get<SettingsInterface>({accepted_urls: []}).then((result) => {
+        if (result.accepted_urls.length <= 0) {
+            result.accepted_urls = [{
+                name: 'Default',
+                url: '127.0.0.1:7865'
             }];
         }
 
-        if (!Array.isArray(data.accepted)) {
-            data.accepted = Object.values(data.accepted);
+        if (count(result.accepted_urls) > 0 && !Array.isArray(result.accepted_urls)) {
+            result.accepted_urls = Object.values(result.accepted_urls);
         }
 
-        accepted.value = data.accepted;
+        settings.value = result;
 
-        chrome.storage.local.set({ fooocus_enhancer: data }, () => {
-            console.log('Accepted fixed as array in storage.');
-        });
+        saveSettings();
     });
 });
 
@@ -74,13 +67,13 @@ onMounted(() => {
 
         <Fieldset legend="IP/Domain Filters">
 
-            <DataTable :value="accepted" tableStyle="width: 100%">
+            <DataTable :value="settings.accepted_urls" tableStyle="width: 100%">
                 <template #empty>No IP or domain address is specified.</template>
 
 
                 <Column field="name" header="Name" style="width: 45%"></Column>
 
-                <Column field="address" header="IP/Domain Address" style="width: 50%"></Column>
+                <Column field="url" header="IP/Domain Address" style="width: 50%"></Column>
 
                 <Column bodyStyle="text-align:center" style="width: 5%">
 
@@ -95,14 +88,14 @@ onMounted(() => {
 
                 <div class="flex flex-col gap-2 mb-3" style="display: flex; flex-direction: column">
                     <label for="name">New Filter Name</label>
-                    <InputText id="name" size="small" v-model="newField.name" aria-describedby="name-help" />
-                    <Message size="small" severity="secondary" variant="simple">Enter your username to reset your password.</Message>
+                    <InputText id="name" size="small" maxlength="15" v-model="newField.name" aria-describedby="name-help" />
+                    <Message size="small" severity="secondary" variant="simple">Enter the filter name.</Message>
                 </div>
 
                 <div class="flex flex-col gap-2 mb-3" style="display: flex; flex-direction: column">
                     <label for="address">New IP/Domain Address</label>
                     <InputText id="address" size="small" v-model="newField.address" aria-describedby="address-help" />
-                    <Message size="small" severity="secondary" variant="simple">Enter your username to reset your password.</Message>
+                    <Message size="small" severity="secondary" variant="simple">Enter the address, even with regex.</Message>
                 </div>
 
                 <Button label="Add Filter" severity="contrast" size="small" @click="addRow" />
