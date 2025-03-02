@@ -81,7 +81,7 @@ onMounted(() => {
 
                 <Column bodyStyle="text-align:center" style="width: 5%">
 
-                    <template #body="{ index }">
+                    <template #body="{ index }: { index: number }">
                         <Button @click="deleteRow(index)" style="padding: 0.25rem 0.5rem; font-size: 0.7rem" label="Delete" severity="contrast" />
                     </template>
 
