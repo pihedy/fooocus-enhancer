@@ -98,5 +98,8 @@ module.exports = (env, argv) => {
         },
         mode: isProduction ? 'production' : 'development',
         devtool: isProduction ? false : 'source-map',
+        performance: {
+            hints: false,
+        }
     };
 };
