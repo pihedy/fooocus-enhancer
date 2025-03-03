@@ -73,7 +73,7 @@ try {
     console.log(error);
 }
 
-window.addEventListener('unload', () => {
+window.addEventListener('pagehide', () => {
     invalidated = true;
 });
 
