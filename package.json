@@ -1,6 +1,6 @@
 {
     "name": "fooocus-enhancer",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "A powerful Chrome extension that enhances the Fooocus web UI experience by adding useful features and improvements.",
     "main": "background.js",
     "scripts": {
