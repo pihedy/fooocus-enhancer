@@ -17,8 +17,3 @@ I made it primarily for my own use, but I also looked at the project more during
 - [ ]  CivitAI profile integration.
 - [ ]  Download models from CivitAI.
 - [ ]  Refactoring and everything else.
-
-## Known bugs
-
-- When loading, the basic lora trigger words container is not displayed.
-- If you select a preset, the container of the associated trigger words is not displayed by default, you have to select it again.
