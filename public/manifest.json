@@ -17,10 +17,13 @@
       "js": [
         "content.js"
       ],
-      "css": [
-        "css/main.css"
-      ],
       "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["css/main.css"],
+      "matches": ["<all_urls>"]
     }
   ],
   "action": {
