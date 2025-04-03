@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Fooocus Enhancer",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "A powerful Chrome extension that enhances the Fooocus web UI experience by adding useful features and improvements.",
   "permissions": [
     "storage"
@@ -17,10 +17,17 @@
       "js": [
         "content.js"
       ],
-      "css": [
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
         "css/main.css"
       ],
-      "run_at": "document_idle"
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "action": {

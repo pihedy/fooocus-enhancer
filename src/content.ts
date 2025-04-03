@@ -59,6 +59,13 @@ try {
             return;
         }
 
+        const link = document.createElement('link');
+        
+        link.rel = 'stylesheet';
+        link.href = chrome.runtime.getURL('css/main.css');
+
+        document.head.appendChild(link);
+
         const initInterval = setInterval(() => {
             if (document.readyState !== 'complete') {
                 return;
@@ -82,6 +89,8 @@ window.addEventListener('pagehide', () => {
  * Dispatches a 'fooocus-enhancer-ready' event to signal that the initialization is complete.
  */
 function init(): void {
+    console.log('Fooocus Enhancer Content init.');
+
     let Collection = document.getElementsByTagName('gradio-app');
 
     if (Collection.length <= 0) {
